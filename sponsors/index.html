@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SPONSORS &amp; PARTNERS // TECH AAKRITI 2027</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/sponsors.css" />
+</head>
+
+<body class="sponsors-page-body">
+  <!-- Preloader Screen: Spider Fill Animation -->
+  <div class="preloader" id="preloader" aria-label="Loading Tech Aakriti 2027 Sponsors">
+    <div class="preloader-content">
+      <div class="spider-loader-container" id="spider-container">
+        <div class="spider-bg"></div>
+        <div class="spider-fill" id="spider-fill"></div>
+      </div>
+      <div class="preloader-text-wrapper" id="preloader-text-wrapper">
+        <p class="preloader-subtext">Entering The Innoverse...</p>
+        <div class="preloader-counter" id="preloader-counter">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Ambient Three.js Canvas (Crimson Red Streamlines on Black) -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Top Navigation Header -->
+  <header class="site-header">
+    <div class="header-left">
+      <a href="/" class="nav-logo-link" title="Return to Home">
+        <img src="/jutechfestlogo.png" alt="Tech Aakriti 2027" class="site-logo" />
+      </a>
+    </div>
+  </header>
+
+  <!-- Top-Level Fixed Circular Glass Hamburger / Cross Toggle Button -->
+  <button class="menu" id="menu-btn" type="button" aria-label="Toggle navigation menu">
+    <div class="hamburger-icon" id="hamburger-icon">
+      <span class="ham-line line-top"></span>
+      <span class="ham-line line-mid"></span>
+      <span class="ham-line line-bot"></span>
+    </div>
+  </button>
+
+  <!-- Fullscreen WeAreCasey Style Interactive Menu Overlay -->
+  <nav class="fullscreen-menu" id="fullscreen-menu" aria-hidden="true">
+    <div class="menu-bg"></div>
+    <div class="menu-container">
+      <div class="menu-items-list">
+        <a class="menu-item" href="/" data-target="home">
+          <span class="item-index">01</span>
+          <span class="item-label">Home</span>
+          <span class="item-divider"></span>
+        </a>
+        <a class="menu-item" href="/events" data-target="events">
+          <span class="item-index">02</span>
+          <span class="item-label">Events</span>
+          <span class="item-divider"></span>
+        </a>
+        <a class="menu-item" href="/team" data-target="team">
+          <span class="item-index">03</span>
+          <span class="item-label">Team</span>
+          <span class="item-divider"></span>
+        </a>
+        <a class="menu-item active" href="/sponsors" data-target="sponsors">
+          <span class="item-index">04</span>
+          <span class="item-label">Sponsors</span>
+          <span class="item-divider"></span>
+        </a>
+        <a class="menu-item" href="/contact" data-target="contact">
+          <span class="item-index">05</span>
+          <span class="item-label">Contact</span>
+          <span class="item-divider"></span>
+        </a>
+        <a class="menu-item" href="/guidelines" data-target="guidelines">
+          <span class="item-index">06</span>
+          <span class="item-label">Guidelines</span>
+          <span class="item-divider"></span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Sponsors Page Wrapper -->
+  <main class="sponsors-page-wrapper">
+    <!-- Header Section -->
+    <header class="sponsors-header-section">
+      <div class="sponsors-meta-tag">
+        <span class="tag-dot"></span>
+        <span>04 // POWERING THE INNOVERSE</span>
+      </div>
+      <h1 class="sponsors-main-heading">
+        OUR <span class="accent-text">SPONSORS</span> &amp; PARTNERS
+      </h1>
+      <div class="sponsors-subtext-bar">
+        <p class="sponsors-subtext">
+          Industry titans, gaming giants, and innovative brands collaborating with Tech Aakriti 2027.
+        </p>
+        <span class="sponsors-stats-badge">12 OFFICIAL PARTNERS • 2027 EDITION</span>
+      </div>
+    </header>
+
+    <!-- Continuous Partner Ticker / Marquee -->
+    <section class="sponsors-marquee-section" aria-hidden="true">
+      <div class="sponsors-marquee-track" id="sponsors-marquee-track">
+        <!-- Injected dynamically by sponsors.js -->
+      </div>
+    </section>
+
+    <!-- Uniform Rescaled Sponsors Cards Grid (Images and Names Only) -->
+    <section class="sponsors-grid" id="sponsors-grid" aria-label="Official Sponsors Directory">
+      <!-- Rendered dynamically by sponsors.js -->
+    </section>
+
+    <!-- Become a Partner CTA Banner -->
+    <section class="sponsors-cta-banner">
+      <div class="cta-content">
+        <span class="cta-tag">PARTNERSHIP INQUIRIES</span>
+        <h2 class="cta-title">WANT TO PARTNER WITH TECH AAKRITI 2027?</h2>
+        <p class="cta-desc">
+          Collaborate with the premier student-led technical festival at Army Institute of Technology, Pune. Connect with 15,000+ engineers, coders, gamers, and robot builders. Access custom branding, exhibition stalls, and keynote engagement.
+        </p>
+      </div>
+      <div class="cta-action-wrap">
+        <a href="/contact" class="cta-btn">
+          <span>CONNECT WITH SPONSORSHIP TEAM</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/sponsors.js"></script>
+</body>
+
+</html>

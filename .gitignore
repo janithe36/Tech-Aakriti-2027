@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production Build
+dist/
+dist-ssr/
+*.local
+
+# System & Editor Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.log
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Temporary media storage
+.tempmediaStorage/
+__MACOSX/
+.agents/
+public/innov8-2026-main/
+public/innov8-2026-main.zip
+public/jurhythm-26-main/
+public/jurhythm-26-main.zip

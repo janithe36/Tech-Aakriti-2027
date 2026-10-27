@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CORE TEAM // TECH AAKRITI 2027</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/team.css" />
+</head>
+
+<body class="team-page-body">
+  <!-- Preloader Screen: Spider Fill Animation -->
+  <div class="preloader" id="preloader" aria-label="Loading Tech Aakriti 2027">
+    <div class="preloader-content">
+      <div class="spider-loader-container" id="spider-container">
+        <div class="spider-bg"></div>
+        <div class="spider-fill" id="spider-fill"></div>
+      </div>
+      <div class="preloader-text-wrapper" id="preloader-text-wrapper">
+        <p class="preloader-subtext">Entering The Innoverse...</p>
+        <div class="preloader-counter" id="preloader-counter">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Ambient Three.js Canvas (Crimson Red Streamlines on Black) -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Top Navigation Header -->
+  <header class="site-header">
+    <div class="header-left">
+      <a href="/" class="nav-logo-link" title="Return to Home">
+        <img src="/jutechfestlogo.png" alt="Tech Aakriti 2027" class="site-logo" />
+      </a>
+    </div>
+  </header>
+
+  <!-- Top-Level Fixed Circular Glass Hamburger / Cross Toggle Button -->
+  <button class="menu" id="menu-btn" type="button" aria-label="Toggle navigation menu">
+    <div class="hamburger-icon" id="hamburger-icon">
+      <span class="ham-line line-top"></span>
+      <span class="ham-line line-mid"></span>
+      <span class="ham-line line-bot"></span>
+    </div>
+  </button>
+
+  <!-- Fullscreen WeAreCasey Style Interactive Menu Overlay -->
+  <nav class="fullscreen-menu" id="fullscreen-menu" aria-hidden="true">
+    <div class="menu-bg"></div>
+    <div class="menu-container">
+      <div class="menu-items-list">
+        <a class="menu-item" href="/" data-target="home">
+          <span class="item-index">01</span>
+          <span class="item-label">Home</span>
+          <span class="item-divider"></span>
+        </a>
+        <a class="menu-item" href="/events" data-target="events">
+          <span class="item-index">02</span>
+          <span class="item-label">Events</span>
+          <span class="item-divider"></span>
+        </a>
+        <a class="menu-item active" href="/team" data-target="team">
+          <span class="item-index">03</span>
+          <span class="item-label">Team</span>
+          <span class="item-divider"></span>
+        </a>
+        <a class="menu-item" href="/sponsors" data-target="sponsors">
+          <span class="item-index">04</span>
+          <span class="item-label">Sponsors</span>
+          <span class="item-divider"></span>
+        </a>
+        <a class="menu-item" href="/contact" data-target="contact">
+          <span class="item-index">05</span>
+          <span class="item-label">Contact</span>
+          <span class="item-divider"></span>
+        </a>
+        <a class="menu-item" href="/guidelines" data-target="guidelines">
+          <span class="item-index">06</span>
+          <span class="item-label">Guidelines</span>
+          <span class="item-divider"></span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Team Page Wrapper -->
+  <main class="team-page-wrapper">
+    <!-- Header Section -->
+    <header class="team-header-section">
+      <div class="team-meta-tag">
+        <span class="tag-dot"></span>
+        <span>03 // ARCHITECTS OF INNOVERSE</span>
+      </div>
+      <h1 class="team-main-heading">
+        THE CORE <span class="accent-text">COMMITTEE</span>
+      </h1>
+      <div class="team-subtext-bar">
+        <p class="team-subtext">
+          Meet the leads and departmental heads orchestrating the engineering, operations, and vision of Tech Aakriti 2027.
+        </p>
+        <span class="team-stats-badge">28 TOTAL ORGANIZERS • 9 VERTICALS</span>
+      </div>
+    </header>
+
+    <!-- Section 1: Fest Leads (Executive Leadership) -->
+    <section class="team-section-block">
+      <div class="section-title-bar">
+        <div class="section-heading-wrap">
+          <span class="section-num">01 //</span>
+          <h2 class="section-heading">FEST LEADS</h2>
+        </div>
+        <span class="section-sublabel">EXECUTIVE LEADERSHIP</span>
+      </div>
+      <div class="secretaries-grid" id="secretaries-grid">
+        <!-- Rendered dynamically by team.js -->
+      </div>
+    </section>
+
+    <!-- Section 2: Core Committee Heads with Interactive Department Filters -->
+    <section class="team-section-block">
+      <div class="section-title-bar">
+        <div class="section-heading-wrap">
+          <span class="section-num">02 //</span>
+          <h2 class="section-heading">CORE COMMITTEE HEADS</h2>
+        </div>
+        <span class="section-sublabel">DEPARTMENTAL LEADS</span>
+      </div>
+
+      <!-- Department Filter Tabs (Crisp Rectangular, No Pills) -->
+      <div class="team-filters-wrapper">
+        <nav class="team-filters-nav" id="team-filters-nav" aria-label="Filter by department">
+          <!-- Filter buttons rendered dynamically by team.js -->
+        </nav>
+      </div>
+
+      <div class="core-team-grid" id="core-team-grid">
+        <!-- Rendered dynamically by team.js -->
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/team.js"></script>
+</body>
+
+</html>
