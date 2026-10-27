@@ -2156,6 +2156,17 @@ p {
   text-align: right;
 }
 
+.footer-dev-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.footer-dev-link:hover {
+  color: #ff3344;
+  opacity: 1;
+}
+
 /* Responsive Mobile Layout Matching Reference Image 1 */
 @media (max-width: 900px) {
   .site-footer {
