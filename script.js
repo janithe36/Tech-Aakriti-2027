@@ -1866,7 +1866,7 @@ function init() {
         },
       });
 
-      // 1. EXPERIENCE THE INNOVERSE sweeps in from the 3D left-bevel pose
+      // 1. EXPERIENCE TECH AAKRITI sweeps in from the 3D left-bevel pose
       glimpsesTitleTl.fromTo(
         glimpsesTitle,
         {
@@ -1916,7 +1916,7 @@ function init() {
           0.3
         );
 
-        // 2. AFTER EXPERIENCE THE INNOVERSE arrives fully, roll the quote letters automatically letter-by-letter
+        // 2. AFTER EXPERIENCE TECH AAKRITI arrives fully, roll the quote letters automatically letter-by-letter
         if (charMains.length > 0) {
           glimpsesTitleTl.to(
             charMains,
@@ -1990,7 +1990,7 @@ function init() {
             transformStyle: "preserve-3d",
           });
 
-          // 3D Left-Bevel entrance matching EXPERIENCE THE INNOVERSE
+          // 3D Left-Bevel entrance matching EXPERIENCE TECH AAKRITI
           aftermovieTl.fromTo(
             aftermovieTitle,
             {

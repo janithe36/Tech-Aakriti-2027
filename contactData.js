@@ -5,7 +5,7 @@
 
 export const contactData = {
   title: "CONTACT DIRECTORY",
-  subtitle: "REACH OUT TO INNOVERSE COORDINATION HEADS",
+  subtitle: "REACH OUT TO TECH AAKRITI COORDINATION HEADS",
   marqueeText: "REACH OUT TO US • HARDWARE • SOFTWARE • ESPORTS • PUBLIC RELATIONS • SPONSORSHIP • TECH AAKRITI 2027",
   marqueeSpeed: 28,
   verticals: [

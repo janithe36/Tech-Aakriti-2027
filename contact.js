@@ -328,7 +328,7 @@ function renderMarquee() {
 
   const textChunk = `
     <span class="marquee-chunk">
-      <span>REACH OUT TO INNOVERSE</span>
+      <span>REACH OUT TO TECH AAKRITI</span>
       <span class="marquee-dot">•</span>
       <span>HARDWARE</span>
       <span class="marquee-dot">•</span>
