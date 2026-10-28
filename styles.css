@@ -1649,6 +1649,47 @@ p {
   stroke: currentColor;
 }
 
+.aftermovie-yt-btn {
+  position: absolute;
+  bottom: clamp(1.1rem, 2.5vw, 1.85rem);
+  left: clamp(1.1rem, 2.5vw, 1.85rem);
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.48rem;
+  padding: 0.55rem 1.05rem;
+  background: rgba(5, 5, 7, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  color: #ffffff;
+  font-family: "DM Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: pointer !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  pointer-events: auto;
+}
+
+.aftermovie-yt-btn:hover {
+  background: rgba(255, 0, 0, 0.28);
+  border-color: #ff0000;
+  color: #ffffff;
+  box-shadow: 0 0 18px rgba(255, 0, 0, 0.55);
+  transform: translateY(-2px);
+}
+
+.aftermovie-yt-btn .yt-icon {
+  width: 15px;
+  height: 15px;
+  fill: #ff0000;
+}
+
 /* Scroll Below Hint */
 .aftermovie-scroll-hint {
   position: absolute;
@@ -1765,6 +1806,7 @@ p {
 
   .aftermovie-desktop-video,
   .aftermovie-sound-btn,
+  .aftermovie-yt-btn,
   .aftermovie-preview-img,
   .aftermovie-media-overlay {
     display: none !important;
