@@ -3,6 +3,7 @@
 // Minimalist Editorial UI, Dynamic Department Filtering & GSAP Entrance
 // =============================================================
 
+import "./cursor.js";
 import * as THREE from "three";
 import gsap from "gsap";
 import { vertexShader, bgFragmentShader } from "./shaders.js";
@@ -335,7 +336,7 @@ function renderSecretaries() {
             alt="${member.name}" 
             class="team-card-img" 
             loading="lazy" 
-            onerror="this.src='/fallback_avatar.png'"
+            onerror="this.onerror=null; this.src='/team/jani.png'"
           />
           <div class="team-card-vignette"></div>
           <span class="team-card-tag">${member.tag}</span>
@@ -430,7 +431,7 @@ function renderCoreTeam(filter = "all", animate = false) {
             alt="${member.name}" 
             class="team-card-img" 
             loading="lazy" 
-            onerror="this.src='/fallback_avatar.png'"
+            onerror="this.onerror=null; this.src='/team/jani.png'"
           />
           <div class="team-card-vignette"></div>
           <span class="team-card-tag">${member.deptLabel}</span>

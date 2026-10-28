@@ -9,6 +9,7 @@
   <meta property="og:title" content="Tech Aakriti 2027 // Events &amp; Registration" />
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/events.css" />
+  <link rel="icon" type="image/png" href="/techaakriti-logo.png" />
 </head>
 
 <body class="events-page-body">
@@ -98,33 +99,33 @@
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
-          <button id="clear-search-btn" class="clear-search-btn" style="display: none;" title="Clear search">&times;</button>
+          <button id="clear-search-btn" type="button" class="clear-search-btn" aria-label="Clear search" style="display: none;" title="Clear search">&times;</button>
         </div>
 
         <!-- Categories Filter -->
         <nav class="categories-nav">
-          <button class="category-item active" data-category="all">
+          <button type="button" class="category-item active" data-category="all">
             <div class="cat-label-wrap">
               <span class="cat-label cat-label-main">ALL</span>
               <span class="cat-label cat-label-hover">ALL</span>
             </div>
             <span class="cat-count" id="count-all">21</span>
           </button>
-          <button class="category-item" data-category="hardware">
+          <button type="button" class="category-item" data-category="hardware">
             <div class="cat-label-wrap">
               <span class="cat-label cat-label-main">HARDWARE</span>
               <span class="cat-label cat-label-hover">HARDWARE</span>
             </div>
             <span class="cat-count" id="count-hardware">9</span>
           </button>
-          <button class="category-item" data-category="software">
+          <button type="button" class="category-item" data-category="software">
             <div class="cat-label-wrap">
               <span class="cat-label cat-label-main">SOFTWARE</span>
               <span class="cat-label cat-label-hover">SOFTWARE</span>
             </div>
             <span class="cat-count" id="count-software">6</span>
           </button>
-          <button class="category-item" data-category="esports">
+          <button type="button" class="category-item" data-category="esports">
             <div class="cat-label-wrap">
               <span class="cat-label cat-label-main">ESPORTS</span>
               <span class="cat-label cat-label-hover">ESPORTS</span>
@@ -154,7 +155,7 @@
         <div class="no-results-box" id="no-results-box" style="display: none;">
           <p class="no-results-title">NO EVENTS FOUND</p>
           <p class="no-results-desc">No events matched your search keyword or selected category.</p>
-          <button class="reset-filter-btn" id="reset-filter-btn">RESET FILTERS</button>
+          <button type="button" class="reset-filter-btn" id="reset-filter-btn">RESET FILTERS</button>
         </div>
       </section>
     </div>
@@ -163,7 +164,7 @@
   <!-- Interactive Event Details / Registration Modal -->
   <div class="event-modal-backdrop" id="event-modal" style="display: none;">
     <div class="event-modal-dialog">
-      <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">
+      <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>

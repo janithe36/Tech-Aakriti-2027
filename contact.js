@@ -3,6 +3,7 @@
 // Minimalist Editorial UI, Dynamic Vertical Directory & Phone Copy Actions
 // =============================================================
 
+import "./cursor.js";
 import * as THREE from "three";
 import gsap from "gsap";
 import { vertexShader, bgFragmentShader } from "./shaders.js";
