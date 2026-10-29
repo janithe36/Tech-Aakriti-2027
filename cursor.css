@@ -3,14 +3,39 @@
    High-contrast sticker hand, Spidey-Sense, Web Throwing FX & Drag Slinging
    ============================================================= */
 
-/* Hide native cursor ONLY on fine pointer desktop environments */
+/* =============================================================
+   HIDE NATIVE CURSOR PERMANENTLY (Fixes white hand flash on hover)
+   ============================================================= */
 @media (pointer: fine) {
   html.has-spider-cursor,
-  html.has-spider-cursor * {
+  html.has-spider-cursor body,
+  html.has-spider-cursor *,
+  html.has-spider-cursor *::before,
+  html.has-spider-cursor *::after,
+  html.has-spider-cursor a,
+  html.has-spider-cursor a:hover,
+  html.has-spider-cursor a:active,
+  html.has-spider-cursor a:focus,
+  html.has-spider-cursor button,
+  html.has-spider-cursor button:hover,
+  html.has-spider-cursor button:active,
+  html.has-spider-cursor button:focus,
+  html.has-spider-cursor [role="button"],
+  html.has-spider-cursor [role="button"]:hover,
+  html.has-spider-cursor [role="button"]:active,
+  html.has-spider-cursor input[type="submit"],
+  html.has-spider-cursor input[type="button"],
+  html.has-spider-cursor input[type="reset"],
+  html.has-spider-cursor select,
+  html.has-spider-cursor summary,
+  html.has-spider-cursor .card,
+  html.has-spider-cursor .card:hover,
+  html.has-spider-cursor .btn,
+  html.has-spider-cursor .btn:hover {
     cursor: none !important;
   }
 
-  /* Preserve native I-beam cursor on text selection & inputs */
+  /* Preserve native I-beam cursor strictly on text inputs & textareas */
   html.has-spider-cursor input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="radio"]):not([type="checkbox"]),
   html.has-spider-cursor textarea,
   html.has-spider-cursor [contenteditable="true"],
@@ -22,6 +47,11 @@
 }
 
 /* Root cursor container — fixed, zero size, never intercepts pointer events */
+.spider-cursor-root,
+.spider-cursor-root * {
+  pointer-events: none !important;
+}
+
 .spider-cursor-root {
   position: fixed;
   top: 0;
@@ -33,8 +63,9 @@
   z-index: 2147483647;
   opacity: 0;
   transition: opacity 0.22s ease-out;
-  contain: layout style;
+  contain: layout style paint;
   will-change: transform;
+  transform: translateZ(0);
 }
 
 .spider-cursor-root.is-visible {

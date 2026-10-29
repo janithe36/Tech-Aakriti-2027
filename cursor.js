@@ -32,6 +32,7 @@ export class SpiderCursor {
     // Aerodynamic flight banking & animation physics
     this.currentTilt = 0;
     this.senseTimeout = null;
+    this.pendingHoverTarget = null;
 
     // State flags
     this.isInitialized = false;
@@ -80,6 +81,9 @@ export class SpiderCursor {
     this.startLoop();
 
     document.documentElement.classList.add("has-spider-cursor");
+    if (document.body) {
+      document.body.classList.add("has-spider-cursor");
+    }
     this.isInitialized = true;
     return this;
   }
@@ -229,8 +233,8 @@ export class SpiderCursor {
       }
     }
 
-    // Check hovered target
-    this.checkHoverTarget(e.target);
+    // Store target for animation frame check (prevents 1000Hz CPU choking)
+    this.pendingHoverTarget = e.target;
   }
 
   updateSlingWeb(x1, y1, x2, y2) {
@@ -559,6 +563,12 @@ export class SpiderCursor {
         this.x = this.targetX;
         this.y = this.targetY;
 
+        // Process hover target on animation frame (smooth 60/120Hz sync)
+        if (this.pendingHoverTarget) {
+          this.checkHoverTarget(this.pendingHoverTarget);
+          this.pendingHoverTarget = null;
+        }
+
         // Calculate pointer velocity for aerodynamic banking
         const vx = this.x - this.lastX;
         const vy = this.y - this.lastY;
@@ -628,6 +638,9 @@ export class SpiderCursor {
     document.removeEventListener("visibilitychange", this.onVisibilityChange);
 
     document.documentElement.classList.remove("has-spider-cursor");
+    if (document.body) {
+      document.body.classList.remove("has-spider-cursor");
+    }
 
     if (this.root) {
       this.root.remove();

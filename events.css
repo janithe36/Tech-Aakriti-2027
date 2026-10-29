@@ -42,7 +42,7 @@ input[type="submit"],
 .events-table-row,
 .event-card,
 .events-view-btn {
-  cursor: pointer !important;
+  cursor: pointer;
 }
 
 .events-page-body {

@@ -69,7 +69,7 @@ function init() {
       desktopVideo.addEventListener("canplay", resolveVideo, { once: true });
       desktopVideo.addEventListener("canplaythrough", resolveVideo, { once: true });
       desktopVideo.addEventListener("error", resolveVideo, { once: true });
-      setTimeout(resolveVideo, 6000);
+      setTimeout(resolveVideo, 1800);
     }
   }
 
@@ -123,7 +123,7 @@ function init() {
       isAssetsComplete = true;
       realLoadProgress = 100;
     }
-  }, 12000);
+  }, 2800);
 
   function finishPreloader() {
     // 1. Initial WebGL Warmup: compile all scenes on GPU behind preloader
@@ -209,8 +209,8 @@ function init() {
 
   const getOptimalDpr = () =>
     isTouchDevice()
-      ? Math.min(window.devicePixelRatio || 1, 1.25)
-      : Math.min(window.devicePixelRatio || 1, 1.75);
+      ? Math.min(window.devicePixelRatio || 1, 1.0)
+      : Math.min(window.devicePixelRatio || 1, 1.35);
 
   // -------------------------------------------------------------
   // 1. LENIS SMOOTH SCROLL & GSAP SCROLLTRIGGER SETUP

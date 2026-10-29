@@ -50,7 +50,7 @@ input[type="submit"],
 .events-filter-btn,
 .events-table-row,
 .event-card {
-  cursor: pointer !important;
+  cursor: pointer;
 }
 
 html {
@@ -253,7 +253,7 @@ p {
   justify-content: center;
   z-index: 900 !important;
   pointer-events: auto !important;
-  cursor: pointer !important;
+  cursor: pointer;
 }
 
 .nav-logo-link {
@@ -262,7 +262,7 @@ p {
   justify-content: center;
   transform-origin: center center;
   pointer-events: auto !important;
-  cursor: pointer !important;
+  cursor: pointer;
 }
 
 .site-logo {
@@ -271,7 +271,7 @@ p {
   max-width: 250px;
   object-fit: contain;
   pointer-events: auto !important;
-  cursor: pointer !important;
+  cursor: pointer;
   image-rendering: -webkit-optimize-contrast;
   filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.5));
   transition: transform 0.25s ease, opacity 0.25s ease, filter 0.25s ease;
@@ -293,7 +293,7 @@ p {
   justify-content: center;
   z-index: 900 !important;
   pointer-events: auto !important;
-  cursor: pointer !important;
+  cursor: pointer;
 }
 
 .home-page #floating-logo {
@@ -302,7 +302,7 @@ p {
   justify-content: center;
   transform-origin: center top;
   pointer-events: auto !important;
-  cursor: pointer !important;
+  cursor: pointer;
   /* Initial scale in header so there is zero flash before GSAP initializes */
   transform: scale(0.22);
 }
@@ -343,7 +343,7 @@ p {
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.95);
   color: #050507;
-  cursor: pointer !important;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -909,12 +909,12 @@ p {
     top: 0.95rem;
     z-index: 900 !important;
     pointer-events: auto !important;
-    cursor: pointer !important;
+    cursor: pointer;
   }
 
   .nav-logo-link {
     pointer-events: auto !important;
-    cursor: pointer !important;
+    cursor: pointer;
     display: inline-flex !important;
   }
 
@@ -1630,7 +1630,7 @@ p {
   text-transform: uppercase;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  cursor: pointer !important;
+  cursor: pointer;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
   pointer-events: auto;
@@ -1671,7 +1671,7 @@ p {
   text-decoration: none;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  cursor: pointer !important;
+  cursor: pointer;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
   pointer-events: auto;
@@ -1941,7 +1941,7 @@ p {
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  cursor: pointer !important;
+  cursor: pointer;
   transition: transform 0.25s ease;
 }
 
@@ -2061,7 +2061,7 @@ p {
   background: transparent !important;
   box-shadow: none !important;
   padding: 0.15rem 0;
-  cursor: pointer !important;
+  cursor: pointer;
   outline: none;
   display: inline-flex;
   align-items: center;
@@ -2161,7 +2161,7 @@ p {
   text-decoration: none;
   box-shadow: 0 0 25px rgba(217, 20, 36, 0.6);
   transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-  cursor: pointer !important;
+  cursor: pointer;
 }
 
 .footer-venue-btn:hover {
@@ -2466,7 +2466,7 @@ p {
   align-items: center;
   white-space: nowrap;
   color: #ffffff;
-  cursor: pointer !important;
+  cursor: pointer;
   transition: color 0.25s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   position: relative;
 }
@@ -2612,5 +2612,22 @@ p {
   #domains-canvas,
   #glimpses-canvas {
     pointer-events: none !important;
+  }
+}
+
+/* Ensure custom Spider cursor completely suppresses native cursor */
+@media (pointer: fine) {
+  html.has-spider-cursor,
+  html.has-spider-cursor body,
+  html.has-spider-cursor *,
+  html.has-spider-cursor *:hover,
+  html.has-spider-cursor *:active,
+  html.has-spider-cursor *:focus {
+    cursor: none !important;
+  }
+  html.has-spider-cursor input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="radio"]):not([type="checkbox"]),
+  html.has-spider-cursor textarea,
+  html.has-spider-cursor [contenteditable="true"] {
+    cursor: text !important;
   }
 }
