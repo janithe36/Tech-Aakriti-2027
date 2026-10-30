@@ -97,7 +97,6 @@ function initBackgroundCanvas() {
 
 // =============================================================
 // 2. SPIDER FILL REAL PRELOADER
-// =============================================================
 function initPreloader() {
   const preloader = document.getElementById("preloader");
   const spiderFill = document.getElementById("spider-fill");
@@ -116,62 +115,79 @@ function initPreloader() {
   });
 
   const progressInterval = setInterval(() => {
-    const target = isPageLoaded ? 100 : 88;
-    displayProgress += (target - displayProgress) * 0.12;
+    const target = isPageLoaded ? 100 : 92;
+    displayProgress += (target - displayProgress) * 0.15;
 
     const rounded = Math.min(100, Math.round(displayProgress));
     if (counter) counter.textContent = `${rounded}%`;
     if (spiderFill) spiderFill.style.clipPath = `inset(${100 - rounded}% 0 0 0)`;
 
-    if (isPageLoaded && displayProgress >= 98.5 && !hasFinished) {
-      hasFinished = true;
-      clearInterval(progressInterval);
-
-      if (counter) counter.textContent = "100%";
-      if (spiderFill) spiderFill.style.clipPath = "inset(0% 0 0 0)";
-
+    if ((isPageLoaded || displayProgress >= 98.5) && !hasFinished) {
       finishPreloader();
     }
   }, 1000 / 60);
 
-  setTimeout(() => {
+  const fallbackTimeout = setTimeout(() => {
     if (!hasFinished) {
       isPageLoaded = true;
+      finishPreloader();
     }
-  }, 3200);
+  }, 1500);
 
   function finishPreloader() {
+    if (hasFinished) return;
+    hasFinished = true;
+    if (progressInterval) clearInterval(progressInterval);
+    if (fallbackTimeout) clearTimeout(fallbackTimeout);
+
+    if (counter) counter.textContent = "100%";
+    if (spiderFill) spiderFill.style.clipPath = "inset(0% 0 0 0)";
+    if (preloader) preloader.style.pointerEvents = "none";
+
     try {
       if (bgRenderer && bgScene && bgCamera) {
         bgRenderer.compile(bgScene, bgCamera);
       }
     } catch (_) {}
 
-    const tl = gsap.timeline({
-      delay: 0.1,
-      onComplete: () => {
-        if (preloader) {
-          preloader.style.display = "none";
-          preloader.style.pointerEvents = "none";
-        }
-        animatePageEntrance();
-      },
-    });
+    const forceDismiss = () => {
+      if (preloader) {
+        preloader.style.display = "none";
+        preloader.style.pointerEvents = "none";
+      }
+      document.documentElement.classList.remove("is-loading");
+      document.body.classList.remove("is-loading");
+      animatePageEntrance();
+    };
 
-    tl.to([spiderContainer, textWrapper], {
-      y: -28,
-      opacity: 0,
-      duration: 0.45,
-      ease: "power2.in",
-    }).to(
-      preloader,
-      {
-        yPercent: -100,
-        duration: 0.75,
-        ease: "power4.inOut",
-      },
-      "-=0.15"
-    );
+    const failsafe = setTimeout(forceDismiss, 900);
+
+    try {
+      const tl = gsap.timeline({
+        delay: 0.08,
+        onComplete: () => {
+          clearTimeout(failsafe);
+          forceDismiss();
+        },
+      });
+
+      tl.to([spiderContainer, textWrapper], {
+        y: -25,
+        opacity: 0,
+        duration: 0.35,
+        ease: "power2.in",
+      }).to(
+        preloader,
+        {
+          yPercent: -100,
+          duration: 0.65,
+          ease: "power4.inOut",
+        },
+        "-=0.06"
+      );
+    } catch (_) {
+      forceDismiss();
+    }
   }
 }
 

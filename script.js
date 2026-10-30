@@ -90,8 +90,8 @@ function init() {
   let minProgress = 0;
 
   gsap.to({ val: 0 }, {
-    val: 20,
-    duration: 0.7,
+    val: 25,
+    duration: 0.6,
     ease: "power1.out",
     onUpdate: function () {
       minProgress = this.targets()[0].val;
@@ -100,33 +100,38 @@ function init() {
 
   const progressInterval = setInterval(() => {
     const target = isAssetsComplete ? 100 : Math.max(minProgress, realLoadProgress);
-    displayProgress += (target - displayProgress) * 0.12;
+    displayProgress += (target - displayProgress) * 0.14;
 
     const rounded = Math.min(100, Math.round(displayProgress));
     if (counter) counter.textContent = `${rounded}%`;
     if (spiderFill) spiderFill.style.clipPath = `inset(${100 - rounded}% 0 0 0)`;
 
-    if (isAssetsComplete && displayProgress >= 99.2 && !hasPreloaderFinished) {
-      hasPreloaderFinished = true;
-      clearInterval(progressInterval);
-
-      if (counter) counter.textContent = "100%";
-      if (spiderFill) spiderFill.style.clipPath = "inset(0% 0 0 0)";
-
+    // Once target reaches 100% or display reaches 98.5% or assets finish, transition immediately!
+    if ((isAssetsComplete || displayProgress >= 98.5) && !hasPreloaderFinished) {
       finishPreloader();
     }
   }, 1000 / 60);
 
-  // Safety fallback: if any image hangs or network drops, force complete after 12s
-  setTimeout(() => {
+  // Safety fallback: Never leave the user waiting more than 1.8s
+  const fallbackTimeout = setTimeout(() => {
     if (!hasPreloaderFinished) {
       isAssetsComplete = true;
       realLoadProgress = 100;
+      finishPreloader();
     }
-  }, 2800);
+  }, 1800);
 
   function finishPreloader() {
-    // 1. Initial WebGL Warmup: compile all scenes on GPU behind preloader
+    if (hasPreloaderFinished) return;
+    hasPreloaderFinished = true;
+    if (progressInterval) clearInterval(progressInterval);
+    if (fallbackTimeout) clearTimeout(fallbackTimeout);
+
+    if (counter) counter.textContent = "100%";
+    if (spiderFill) spiderFill.style.clipPath = "inset(0% 0 0 0)";
+    if (preloader) preloader.style.pointerEvents = "none";
+
+    // 1. Safe WebGL Warmup: compile all scenes on GPU behind preloader
     try {
       if (bgRenderer && bgScene && bgCamera) {
         bgRenderer.compile(bgScene, bgCamera);
@@ -145,47 +150,56 @@ function init() {
         domainsRenderer.render(domainsScene, domainsCamera);
       }
       if (glimpsesRenderer && glimpsesScene && glimpsesCamera) {
-        if (glimpsesTextures && glimpsesTextures.length) {
-          glimpsesTextures.forEach((t) => {
-            try { glimpsesRenderer.initTexture(t); } catch (_) {}
-          });
-        }
-        if (fallingTexture) {
-          try { glimpsesRenderer.initTexture(fallingTexture); } catch (_) {}
-        }
         glimpsesRenderer.compile(glimpsesScene, glimpsesCamera);
         glimpsesRenderer.render(glimpsesScene, glimpsesCamera);
       }
     } catch (_) {}
 
-    ScrollTrigger.refresh();
+    try {
+      ScrollTrigger.refresh();
+    } catch (_) {}
 
-    // 2. Animate out the preloader curtain
-    const tl = gsap.timeline({
-      delay: 0.15,
-      onComplete: () => {
-        if (preloader) preloader.style.display = "none";
-        document.documentElement.classList.remove("is-loading");
-        document.body.classList.remove("is-loading");
-        lenis.start();
-        ScrollTrigger.refresh();
-      },
-    });
+    // Failsafe curtain dismissal: Guaranteed to dismiss within 1000ms under any network/GPU freeze
+    const forceDismiss = () => {
+      if (preloader) {
+        preloader.style.display = "none";
+        preloader.style.pointerEvents = "none";
+      }
+      document.documentElement.classList.remove("is-loading");
+      document.body.classList.remove("is-loading");
+      if (window.lenis) window.lenis.start();
+      try { ScrollTrigger.refresh(); } catch (_) {}
+    };
 
-    tl.to([spiderContainer, textWrapper], {
-      y: -28,
-      opacity: 0,
-      duration: 0.45,
-      ease: "power2.in",
-    }).to(
-      preloader,
-      {
-        yPercent: -100,
-        duration: 0.85,
-        ease: "power4.inOut",
-      },
-      "-=0.08"
-    );
+    const failsafeId = setTimeout(forceDismiss, 1000);
+
+    // 2. Snappy animated curtain exit
+    try {
+      const tl = gsap.timeline({
+        delay: 0.08,
+        onComplete: () => {
+          clearTimeout(failsafeId);
+          forceDismiss();
+        },
+      });
+
+      tl.to([spiderContainer, textWrapper], {
+        y: -28,
+        opacity: 0,
+        duration: 0.35,
+        ease: "power2.in",
+      }).to(
+        preloader,
+        {
+          yPercent: -100,
+          duration: 0.65,
+          ease: "power4.inOut",
+        },
+        "-=0.06"
+      );
+    } catch (_) {
+      forceDismiss();
+    }
   }
 
   // -------------------------------------------------------------

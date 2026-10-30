@@ -14,10 +14,22 @@ function initPreloader() {
   if (!preloader) return;
 
   const loaderProxy = { progress: 0 };
+  let hasFinished = false;
+
+  const forceDismiss = () => {
+    if (preloader) {
+      preloader.style.display = "none";
+      preloader.style.pointerEvents = "none";
+    }
+    document.documentElement.classList.remove("is-loading");
+    document.body.classList.remove("is-loading");
+  };
+
+  const failsafe = setTimeout(forceDismiss, 2000);
 
   gsap.to(loaderProxy, {
     progress: 100,
-    duration: 1.8,
+    duration: 1.2,
     ease: "power2.inOut",
     onUpdate: () => {
       const p = Math.min(100, Math.round(loaderProxy.progress));
@@ -25,26 +37,35 @@ function initPreloader() {
       if (spiderFill) spiderFill.style.clipPath = `inset(${100 - p}% 0 0 0)`;
     },
     onComplete: () => {
-      const tl = gsap.timeline({
-        onComplete: () => {
-          preloader.style.display = "none";
-        },
-      });
+      if (hasFinished) return;
+      hasFinished = true;
+      if (preloader) preloader.style.pointerEvents = "none";
 
-      tl.to([spiderContainer, textWrapper], {
-        y: -25,
-        opacity: 0,
-        duration: 0.45,
-        ease: "power2.in",
-      }).to(
-        preloader,
-        {
-          yPercent: -100,
-          duration: 0.8,
-          ease: "power4.inOut",
-        },
-        "-=0.1"
-      );
+      try {
+        const tl = gsap.timeline({
+          onComplete: () => {
+            clearTimeout(failsafe);
+            forceDismiss();
+          },
+        });
+
+        tl.to([spiderContainer, textWrapper], {
+          y: -25,
+          opacity: 0,
+          duration: 0.35,
+          ease: "power2.in",
+        }).to(
+          preloader,
+          {
+            yPercent: -100,
+            duration: 0.65,
+            ease: "power4.inOut",
+          },
+          "-=0.06"
+        );
+      } catch (_) {
+        forceDismiss();
+      }
     },
   });
 }

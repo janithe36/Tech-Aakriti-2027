@@ -103,6 +103,7 @@ function initPreloader() {
   document.body.classList.add("is-loading");
 
   let progress = 0;
+  let hasFinished = false;
   const targetImages = sponsorsData.map(s => s.image);
   let loadedCount = 0;
 
@@ -113,29 +114,54 @@ function initPreloader() {
     img.src = src;
   });
 
+  const forceDismiss = () => {
+    if (preloader) {
+      preloader.style.display = "none";
+      preloader.style.pointerEvents = "none";
+    }
+    document.documentElement.classList.remove("is-loading");
+    document.body.classList.remove("is-loading");
+    animateEntrance();
+  };
+
+  const failsafe = setTimeout(() => {
+    if (!hasFinished) {
+      hasFinished = true;
+      if (interval) clearInterval(interval);
+      forceDismiss();
+    }
+  }, 1600);
+
   const interval = setInterval(() => {
     const rawProgress = targetImages.length > 0 ? (loadedCount / targetImages.length) * 100 : 100;
-    progress = Math.min(100, Math.max(progress + 4, Math.floor(rawProgress)));
+    progress = Math.min(100, Math.max(progress + 5, Math.floor(rawProgress)));
 
     spiderFill.style.height = `${progress}%`;
     counter.textContent = `${progress}%`;
 
-    if (progress >= 100) {
+    if (progress >= 100 && !hasFinished) {
+      hasFinished = true;
       clearInterval(interval);
+      if (preloader) preloader.style.pointerEvents = "none";
+
       setTimeout(() => {
         document.documentElement.classList.remove("is-loading");
         document.body.classList.remove("is-loading");
 
-        gsap.to(preloader, {
-          opacity: 0,
-          duration: 0.6,
-          ease: "power2.inOut",
-          onComplete: () => {
-            preloader.style.display = "none";
-            animateEntrance();
-          },
-        });
-      }, 300);
+        try {
+          gsap.to(preloader, {
+            opacity: 0,
+            duration: 0.45,
+            ease: "power2.inOut",
+            onComplete: () => {
+              clearTimeout(failsafe);
+              forceDismiss();
+            },
+          });
+        } catch (_) {
+          forceDismiss();
+        }
+      }, 100);
     }
   }, 25);
 }
