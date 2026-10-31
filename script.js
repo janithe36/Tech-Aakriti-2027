@@ -52,26 +52,7 @@ function init() {
     img.src = src;
   });
 
-  // Track aftermovie video readiness so no static poster flashes before video streams
-  const desktopVideo = document.getElementById("aftermovie-desktop-video");
-  if (desktopVideo && window.innerWidth >= 900) {
-    loadingManager.itemStart("aftermovie-video");
-    let videoResolved = false;
-    const resolveVideo = () => {
-      if (!videoResolved) {
-        videoResolved = true;
-        loadingManager.itemEnd("aftermovie-video");
-      }
-    };
-    if (desktopVideo.readyState >= 3) {
-      resolveVideo();
-    } else {
-      desktopVideo.addEventListener("canplay", resolveVideo, { once: true });
-      desktopVideo.addEventListener("canplaythrough", resolveVideo, { once: true });
-      desktopVideo.addEventListener("error", resolveVideo, { once: true });
-      setTimeout(resolveVideo, 1800);
-    }
-  }
+  // Aftermovie video is lazy-loaded on scroll to keep initial load instantaneous
 
   loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
     itemsTotalTracked = Math.max(itemsTotal, itemsTotalTracked);
@@ -1210,7 +1191,7 @@ function init() {
       video.setAttribute("playsinline", "");
       video.setAttribute("webkit-playsinline", "");
       video.setAttribute("muted", "");
-      video.preload = "auto";
+      video.preload = "metadata";
       video.autoplay = true;
 
       // Start looping playback immediately
@@ -2314,8 +2295,13 @@ function init() {
       }
 
       function startAftermovieVideo() {
-        if (!isMobile && desktopVideo && desktopVideo.paused) {
-          desktopVideo.play().catch(() => {});
+        if (!isMobile && desktopVideo) {
+          if (!desktopVideo.src && desktopVideo.dataset.src) {
+            desktopVideo.src = desktopVideo.dataset.src;
+          }
+          if (desktopVideo.paused) {
+            desktopVideo.play().catch(() => {});
+          }
         }
       }
 

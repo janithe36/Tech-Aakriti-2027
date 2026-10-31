@@ -57,8 +57,8 @@ export default defineConfig({
         sponsorsLegacy: resolve(__dirname, "sponsors.html"),
         guidelines: resolve(__dirname, "guidelines/index.html"),
         guidelinesLegacy: resolve(__dirname, "guidelines.html"),
+        notFound: resolve(__dirname, "404.html"),
       },
     },
   },
 });
-

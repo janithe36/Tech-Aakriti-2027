@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 // Dimension Not Found - Tech Aakriti 2027</title>
+  <meta name="title" content="404: Dimension Not Found - Tech Aakriti 2027" />
+  <meta name="description" content="The page or timeline you are searching for does not exist in Earth-2027. Return to Tech Aakriti base." />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" type="image/png" href="/techaakriti-logo.png" />
+  <style>
+    .error-page-wrapper {
+      position: relative;
+      min-height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      box-sizing: border-box;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 40%, rgba(217, 20, 36, 0.12) 0%, rgba(5, 5, 7, 0.96) 65%, #050507 100%);
+    }
+
+    .error-bg-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.75;
+    }
+
+    .error-card {
+      position: relative;
+      z-index: 10;
+      max-width: 720px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      background: rgba(12, 12, 16, 0.75);
+      border: 1px solid rgba(217, 20, 36, 0.35);
+      border-radius: 24px;
+      padding: clamp(2rem, 5vw, 3.8rem) clamp(1.5rem, 4vw, 3rem);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 35px rgba(217, 20, 36, 0.2);
+    }
+
+    .error-logo-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .error-logo-link:hover {
+      transform: scale(1.05);
+    }
+
+    .error-logo {
+      height: clamp(38px, 6vw, 54px);
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(217, 20, 36, 0.5));
+    }
+
+    .error-glitch-number {
+      font-family: "Righteous", cursive;
+      font-size: clamp(5.5rem, 15vw, 10.5rem);
+      line-height: 0.95;
+      color: transparent;
+      -webkit-text-stroke: 2px #d91424;
+      text-shadow: 0 0 25px rgba(217, 20, 36, 0.75), 0 0 55px rgba(217, 20, 36, 0.35);
+      letter-spacing: 0.05em;
+      position: relative;
+      margin: 0;
+      user-select: none;
+    }
+
+    .error-glitch-number::after {
+      content: "404";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: #ffffff;
+      -webkit-text-stroke: 0;
+      opacity: 0.08;
+      clip-path: polygon(0 30%, 100% 30%, 100% 70%, 0 70%);
+      animation: glitchAnim 3.5s infinite;
+    }
+
+    @keyframes glitchAnim {
+      0%, 92%, 100% {
+        transform: translate(0, 0);
+        opacity: 0.08;
+      }
+      93% {
+        transform: translate(-3px, 2px);
+        opacity: 0.4;
+      }
+      95% {
+        transform: translate(4px, -2px);
+        opacity: 0.3;
+      }
+      97% {
+        transform: translate(-2px, -1px);
+        opacity: 0.5;
+      }
+    }
+
+    .error-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      background: rgba(217, 20, 36, 0.16);
+      border: 1px solid rgba(217, 20, 36, 0.45);
+      border-radius: 9999px;
+      font-family: "DM Mono", monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #ff3b4b;
+    }
+
+    .error-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ff1744;
+      box-shadow: 0 0 8px #ff1744;
+      animation: pulseDot 1.4s ease-in-out infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.75); }
+    }
+
+    .error-title {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .error-description {
+      font-family: "DM Mono", monospace;
+      font-size: clamp(0.85rem, 1.8vw, 1.02rem);
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.72);
+      max-width: 520px;
+      margin: 0;
+    }
+
+    .error-home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.95rem 2.2rem;
+      background: #d91424;
+      color: #ffffff;
+      font-family: "DM Mono", monospace;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 9999px;
+      box-shadow: 0 0 25px rgba(217, 20, 36, 0.65);
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-top: 0.5rem;
+    }
+
+    .error-home-btn:hover {
+      background: #ff1f32;
+      box-shadow: 0 0 35px rgba(255, 31, 50, 0.9);
+      transform: translateY(-2px) scale(1.03);
+    }
+
+    .error-home-btn svg {
+      transition: transform 0.25s ease;
+    }
+
+    .error-home-btn:hover svg {
+      transform: translateX(-4px);
+    }
+  </style>
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://tech-aakriti-2027.vercel.app/404" />
+  <meta property="og:title" content="404 // Tech Aakriti 2027" />
+  <meta property="og:description" content="Where Brilliance Meets Innovation. Annual National Technical Festival of Army Institute of Technology, Pune." />
+  <meta property="og:image" content="https://tech-aakriti-2027.vercel.app/og-banner.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="404 // Tech Aakriti 2027" />
+  <meta name="twitter:description" content="Where Brilliance Meets Innovation. Annual National Technical Festival of Army Institute of Technology, Pune." />
+  <meta name="twitter:image" content="https://tech-aakriti-2027.vercel.app/og-banner.png" />
+  <link rel="canonical" href="https://tech-aakriti-2027.vercel.app/404" />
+</head>
+
+<body class="home-page">
+  <div class="error-page-wrapper">
+    <canvas id="error-bg-canvas" class="error-bg-canvas"></canvas>
+
+    <div class="error-card">
+      <a href="/" class="error-logo-link" title="Tech Aakriti 2027">
+        <img src="/techaakriti-logo.png" alt="Tech Aakriti 2027 Logo" class="error-logo" />
+      </a>
+
+      <div class="error-badge">
+        <span class="error-badge-dot"></span>
+        <span>MULTIVERSE TIMELINE NOT FOUND</span>
+      </div>
+
+      <h1 class="error-glitch-number">404</h1>
+
+      <h2 class="error-title">LOST IN THE MULTIVERSE?</h2>
+
+      <p class="error-description">
+        The coordinate or web-path you swung searching for was erased from Earth-2027.
+        Recalibrate your quantum GPS and rejoin the main timeline.
+      </p>
+
+      <a href="/" class="error-home-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span>RETURN TO BASE</span>
+      </a>
+    </div>
+  </div>
+
+  <script type="module" src="/cursor.js"></script>
+  <script>
+    // Lightweight animated spider-mesh canvas
+    const canvas = document.getElementById("error-bg-canvas");
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      let w = (canvas.width = window.innerWidth);
+      let h = (canvas.height = window.innerHeight);
+
+      window.addEventListener("resize", () => {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      });
+
+      const nodes = Array.from({ length: 38 }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.45,
+        vy: (Math.random() - 0.5) * 0.45,
+      }));
+
+      function render() {
+        ctx.clearRect(0, 0, w, h);
+
+        nodes.forEach((n) => {
+          n.x += n.vx;
+          n.y += n.vy;
+          if (n.x < 0 || n.x > w) n.vx *= -1;
+          if (n.y < 0 || n.y > h) n.vy *= -1;
+        });
+
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < 180) {
+              const alpha = (1 - dist / 180) * 0.22;
+              ctx.strokeStyle = `rgba(217, 20, 36, ${alpha})`;
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(nodes[i].x, nodes[i].y);
+              ctx.lineTo(nodes[j].x, nodes[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        requestAnimationFrame(render);
+      }
+      render();
+    }
+  </script>
+</body>
+
+</html>
