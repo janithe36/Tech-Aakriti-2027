@@ -205,15 +205,15 @@ function init() {
   const getOptimalDpr = () =>
     isTouchDevice()
       ? Math.min(window.devicePixelRatio || 1, 1.0)
-      : Math.min(window.devicePixelRatio || 1, 1.35);
+      : Math.min(window.devicePixelRatio || 1, 1.25);
 
   // -------------------------------------------------------------
   // 1. LENIS SMOOTH SCROLL & GSAP SCROLLTRIGGER SETUP
   // -------------------------------------------------------------
   const lenis = new Lenis({
-    lerp: 0.08,
+    lerp: 0.14,
     smoothWheel: true,
-    syncTouch: true,
+    syncTouch: false,
   });
   window.lenis = lenis;
   lenis.stop(); // Locked while preloader is active
@@ -222,7 +222,7 @@ function init() {
   gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
   });
-  gsap.ticker.lagSmoothing(0);
+  gsap.ticker.lagSmoothing(500, 33);
 
   // -------------------------------------------------------------
   // 2. BACKGROUND WEBGL RENDERER SETUP (#bg-canvas)
@@ -500,9 +500,9 @@ function init() {
     scrollTrigger: {
       trigger: "#hero-scroll-section",
       start: "top top",
-      end: isMobile ? "+=2600" : "+=5600",
+      end: isMobile ? "+=1400" : "+=2200",
       pin: true,
-      scrub: isMobile ? 0.2 : 0.5,
+      scrub: isMobile ? 0.15 : 0.3,
       anticipatePin: 1,
       invalidateOnRefresh: true,
       onToggle: (self) => {
@@ -776,7 +776,7 @@ function init() {
         trigger: "#about-section",
         start: "top 85%",
         end: "bottom 15%",
-        scrub: 1.0,
+        scrub: 0.3,
       },
     });
 
@@ -1058,7 +1058,7 @@ function init() {
         trigger: "#about-section",
         start: "top 80%",
         end: "top 18%",
-        scrub: 1.0,
+        scrub: 0.3,
         invalidateOnRefresh: true,
       },
     });
@@ -1471,9 +1471,9 @@ function init() {
   const domainsScrollTrigger = ScrollTrigger.create({
     trigger: "#domains-scroll-section",
     start: "top top",
-    end: isMobile ? "+=1500" : "+=3400",
+    end: isMobile ? "+=1000" : "+=1600",
     pin: true,
-    scrub: isMobile ? 0.2 : 0.8,
+    scrub: isMobile ? 0.15 : 0.3,
     onToggle: (self) => {
       isDomainsVisible = self.isActive;
       if (!self.isActive) {
@@ -1550,6 +1550,10 @@ function init() {
     progress: 0.0,
     targetProgress: 0.0,
   };
+
+  let cachedGlimpsesHeader = null;
+  let cachedGlimpsesCounter = null;
+  let lastDepthMeters = -1;
 
   if (glimpsesCanvas) {
     glimpsesRenderer = new THREE.WebGLRenderer({
@@ -1760,7 +1764,7 @@ function init() {
     ScrollTrigger.create({
       trigger: "#glimpses-section",
       start: "top 120%",
-      end: isMobile ? "+=2600" : "+=4200",
+      end: isMobile ? "+=1800" : "+=2600",
       onToggle: (self) => {
         isGlimpsesVisible = self.isActive;
       },
@@ -1770,9 +1774,9 @@ function init() {
     ScrollTrigger.create({
       trigger: "#glimpses-section",
       start: "top top",
-      end: isMobile ? "+=1800" : "+=3200",
+      end: isMobile ? "+=1100" : "+=1600",
       pin: true,
-      scrub: isMobile ? 0.25 : 0.5,
+      scrub: isMobile ? 0.15 : 0.3,
       onUpdate: (self) => {
         glimpsesState.targetProgress = self.progress;
       },
@@ -1857,7 +1861,7 @@ function init() {
           trigger: "#glimpses-section",
           start: "top 80%",
           end: "top 5%",
-          scrub: 1.0,
+          scrub: 0.3,
           invalidateOnRefresh: true,
         },
       });
@@ -1960,9 +1964,9 @@ function init() {
           scrollTrigger: {
             trigger: "#aftermovie-section",
             start: "top top",
-            end: "+=3400",
+            end: "+=1500",
             pin: true,
-            scrub: 0.8,
+            scrub: 0.3,
             invalidateOnRefresh: true,
           },
         });
@@ -2198,9 +2202,9 @@ function init() {
           scrollTrigger: {
             trigger: "#aftermovie-section",
             start: "top top",
-            end: "+=1200",
+            end: "+=800",
             pin: true,
-            scrub: 0.6,
+            scrub: 0.3,
             invalidateOnRefresh: true,
           },
         });
@@ -2321,7 +2325,7 @@ function init() {
         trigger: "#aftermovie-section",
         start: "top 95%",
         end: () => {
-          const pinExtra = window.innerWidth >= 900 ? 3400 : 1200;
+          const pinExtra = window.innerWidth >= 900 ? 1500 : 800;
           return `+=${(aftermovieSection ? aftermovieSection.offsetHeight : 800) + pinExtra}`;
         },
         onEnter: () => startAftermovieVideo(),
@@ -2841,18 +2845,21 @@ function init() {
       }
 
       // Title moves upwards on scroll while the character dives downwards
-      const glimpsesHeader = document.querySelector(".glimpses-header-container");
-      if (glimpsesHeader) {
+      if (!cachedGlimpsesHeader) cachedGlimpsesHeader = document.querySelector(".glimpses-header-container");
+      if (cachedGlimpsesHeader) {
         const headerOpacity = Math.max(1.0 - glimpsesState.progress * 2.8, 0.0);
         const headerY = -glimpsesState.progress * 130;
-        glimpsesHeader.style.opacity = headerOpacity;
-        glimpsesHeader.style.transform = `translateX(-50%) translateY(${headerY}px)`;
+        cachedGlimpsesHeader.style.opacity = headerOpacity;
+        cachedGlimpsesHeader.style.transform = `translateX(-50%) translateY(${headerY}px)`;
       }
 
-      const glimpsesCounter = document.getElementById("glimpses-counter");
-      if (glimpsesCounter) {
+      if (!cachedGlimpsesCounter) cachedGlimpsesCounter = document.getElementById("glimpses-counter");
+      if (cachedGlimpsesCounter) {
         const depthMeters = Math.round(glimpsesState.progress * 280);
-        glimpsesCounter.textContent = `DEPTH: ${depthMeters}M / FREEFALL ARCHIVES`;
+        if (depthMeters !== lastDepthMeters) {
+          lastDepthMeters = depthMeters;
+          cachedGlimpsesCounter.textContent = `DEPTH: ${depthMeters}M / FREEFALL ARCHIVES`;
+        }
       }
 
       glimpsesRenderer.render(glimpsesScene, glimpsesCamera);

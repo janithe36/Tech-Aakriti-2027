@@ -46,6 +46,9 @@ export class SpiderCursor {
     // Throttles & intervals
     this.rafId = null;
     this.loadingObserver = null;
+    this.preloaderObserver = null;
+    this.pendingHoverTarget = null;
+    this.lastHoverTarget = null;
 
     // Bound listeners for clean removal
     this.onPointerMove = this.handlePointerMove.bind(this);
@@ -229,8 +232,8 @@ export class SpiderCursor {
       }
     }
 
-    // Check hovered target
-    this.checkHoverTarget(e.target);
+    // Save target for RAF-batched check (prevents choking 1000Hz gaming mice)
+    this.pendingHoverTarget = e.target;
   }
 
   updateSlingWeb(x1, y1, x2, y2) {
@@ -381,15 +384,17 @@ export class SpiderCursor {
   // (Observes .is-loading class and #preloader visibility)
   // -------------------------------------------------------------
   initLoadingWatcher() {
+    const preloader = document.getElementById("preloader");
     const updateLoadingState = () => {
-      const preloader = document.getElementById("preloader");
       const hasLoadingClass =
         document.documentElement.classList.contains("is-loading") ||
-        document.body.classList.contains("is-loading");
-      const isPreloaderActive =
+        (document.body && document.body.classList.contains("is-loading"));
+      const isPreloaderActive = Boolean(
         preloader &&
-        window.getComputedStyle(preloader).display !== "none" &&
-        window.getComputedStyle(preloader).opacity !== "0";
+        preloader.style.display !== "none" &&
+        preloader.style.opacity !== "0" &&
+        !preloader.classList.contains("preloader-hidden")
+      );
 
       const currentlyLoading = Boolean(hasLoadingClass || isPreloaderActive);
 
@@ -400,6 +405,10 @@ export class SpiderCursor {
             this.root.classList.add("is-loading");
           } else {
             this.root.classList.remove("is-loading");
+            if (this.preloaderObserver) {
+              this.preloaderObserver.disconnect();
+              this.preloaderObserver = null;
+            }
           }
         }
       }
@@ -424,9 +433,11 @@ export class SpiderCursor {
       });
     }
 
-    const preloader = document.getElementById("preloader");
     if (preloader) {
-      this.loadingObserver.observe(preloader, {
+      this.preloaderObserver = new MutationObserver(() => {
+        updateLoadingState();
+      });
+      this.preloaderObserver.observe(preloader, {
         attributes: true,
         attributeFilter: ["style", "class"],
       });
@@ -555,6 +566,11 @@ export class SpiderCursor {
   startLoop() {
     const loop = () => {
       if (this.root && this.isVisible) {
+        // Batched RAF hover check (prevents 1000Hz gaming mouse stutter)
+        if (this.pendingHoverTarget && this.pendingHoverTarget !== this.lastHoverTarget) {
+          this.lastHoverTarget = this.pendingHoverTarget;
+          this.checkHoverTarget(this.pendingHoverTarget);
+        }
         // Direct zero-lag position update for precision pointing
         this.x = this.targetX;
         this.y = this.targetY;
@@ -613,6 +629,10 @@ export class SpiderCursor {
     if (this.loadingObserver) {
       this.loadingObserver.disconnect();
       this.loadingObserver = null;
+    }
+    if (this.preloaderObserver) {
+      this.preloaderObserver.disconnect();
+      this.preloaderObserver = null;
     }
     if (this.senseTimeout) {
       clearTimeout(this.senseTimeout);
